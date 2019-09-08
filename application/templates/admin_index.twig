@@ -1,0 +1,49 @@
+{% extends 'base.twig' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+  <div class="columns">
+    <div class="column is-9">
+      <div class="abuttons">
+        <a class="abutton is-small" href="{% if sort_query %}?{{ sort_query }}&{% else %}/{% endif %}">Tất cả</a>
+        <a class="abutton is-small" href="{% if sort_query %}?{{ sort_query }}&{% else %}?{% endif %}sort=num_downloads">Lượt tải</a>
+        <a class="abutton is-small" href="{% if sort_query %}?{{ sort_query }}&{% else %}?{% endif %}sort=num_views">Lượt xem</a>
+        <a class="abutton is-small" href="{% if sort_query %}?{{ sort_query }}&{% else %}?{% endif %}sort=updated">Mới cập nhật</a>
+        <a class="abutton is-small" href="{% if sort_query %}?{{ sort_query }}&{% else %}?{% endif %}sort=created_at">Ngày tạo</a>
+        <a class="abutton is-small" href="{% if sort_query %}?{{ sort_query }}&{% else %}?{% endif %}sort=updated_at">Ngày sửa</a>
+      </div>
+
+      <div class="columns is-multiline">
+        {% for app in apps %}
+          <a href="/{{ app.slug_url }}/{{ app.package_name }}/" class="column app is-4">
+            <div><img src="{{ app.icon_url | image(s=90) }}" alt="→" class="lzl"></div>
+            <div>
+              <b>{{ app.title }}</b>
+              <span>@{{ app.developer_id }}</span>
+              <p><span class="tag dl">{{ app.num_downloads | human_num_downloads }}</span> <span class="tag">{{ app.installation_size | human_size }}</span></p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+      {% include 'components/pagination.twig' %}
+    </div>
+    <div class="column is-3">
+      <div class="atitle"><a href="{% if category_query %}?{{ category_query }}&cat_id=GAME{% else %}?cat_id=GAME{% endif %}">Trò chơi</a></div>
+      <div class="abuttons">
+        {% for category in game_categories %}
+          <a class="abutton is-small" href="{% if category_query %}?{{ category_query }}&cat_id={{ category.category_id }}{% else %}?cat_id={{ category.category_id }}{% endif %}">{{ category.category_name }}</a>
+        {% endfor %}
+      </div>
+      <div class="atitle"><a href="{% if category_query %}?{{ category_query }}&cat_id=APPLICATION{% else %}?cat_id=APPLICATION{% endif %}">Ứng dụng</a></div>
+      <div class="abuttons">
+        {% for category in app_categories %}
+          <a class="abutton is-small" href="{% if category_query %}?{{ category_query }}&cat_id={{ category.category_id }}{% else %}?cat_id={{ category.category_id }}{% endif %}">{{ category.category_name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

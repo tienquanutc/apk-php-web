@@ -1,0 +1,55 @@
+{% extends 'base.twig' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+<div class="columns">
+  <div class="column is-9">
+    <h1 class="atitle heading" style="margin-bottom: 2rem;">Danh sách</h1>
+    {% for category in game_categories %}
+      <div class="block-title">
+        <div class="atitle"><a href="/category/{{ category.category_slug }}/">{{ category.category_name }}</a></div>
+        <a class="more" aria-label="See more" href="/category/{{ category.category_slug }}/"><svg><use xlink:href="#apc-icon-more"></use></svg></a>
+      </div>
+      <div class="columns">
+        {% for app in apps_by_category[category.category_id] %}
+          <a href="/{{ app.slug_url }}/{{ app.package_name }}/" class="column app is-4">
+            <div><img src="{{ app.icon_url | image(s=90) }}" alt="→" class="lzl"></div>
+            <div>
+              <b>{{ app.title }}</b>
+              <span>@{{ app.developer_id }}</span>
+              <p><span class="tag dl">{{ app.num_downloads | human_num_downloads }}</span> <span class="tag">{{ app.installation_size | human_size }}</span></p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    {% for category in app_categories %}
+      <div class="block-title">
+        <div class="atitle"><a href="/category/{{ category.category_slug }}/">{{ category.category_name }}</a></div>
+        <a class="more" aria-label="See more" href="/category/{{ category.category_slug }}/"><svg><use xlink:href="#apc-icon-more"></use></svg></a>
+      </div>
+
+      <div class="columns">
+        {% for app in apps_by_category[category.category_id] %}
+          <a href="/{{ app.slug_url }}/{{ app.package_name }}/" class="column app is-4">
+            <div><img src="{{ app.icon_url | image(s=90) }}" alt="→" class="lzl"></div>
+            <div>
+              <b>{{ app.title }}</b>
+              <span>@{{ app.developer_id }}</span>
+              <p><span class="tag dl">{{ app.num_downloads | human_num_downloads }}</span> <span class="tag">{{ app.installation_size | human_size }}</span></p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="column is-3">
+    {% include 'components/categories_tags_game.twig' %}
+    {% include 'components/categories_tags_apps.twig' %}
+  </div>
+</div>
+{% endblock %}

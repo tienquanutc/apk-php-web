@@ -1,0 +1,81 @@
+{# @formatter:off #}
+{% extends 'base.twig' %}
+
+{% block head %}
+<title>{{ app.title }}</title>
+{% endblock %}
+
+{% block content %}
+  <div class="columns">
+    <div class="column is-9">
+    {% include 'components/breadcrumbs.twig' %}
+    {#  HEADER #}
+    <article class="app is-large" style="margin-bottom: 10px;">
+      <div><img src="{{ app.icon_url | image(s=90) }}" alt="→"></div>
+      <div>
+        <h1 itemprop="name"><a href="/{{ app.slug_url | url_encode }}/{{ app.package_name }}/" class="is-hover-underline" style="color: inherit">{{ app.title }}</a></h1>
+        <h2 style="font-weight:500;color:#1a8453; font-size: 18px">{{ app.version_string }}</h2>
+        <h2 style="font-weight:400;padding: 2px 0;font-size: 16px;margin-top: 6px" itemprop="publisher" class="one-line"><a href="{{ locale_path}}/developer/{{ app.developer_id | url_encode}}/" class="is-link" rel="nofollow">{{ app.developer_id }}</a></h2>
+      </div>
+    </article>
+    <a href="https://apkcombo.com/vi-vn/{{ app.slug_url }}/{{ app.package_name }}" target="_blank" class="abutton is-success is-fullwidth" style="margin-bottom: 15px;">
+          <i><svg class="icon-download"><use xlink:href="#apc-icon-download"></use></svg></i>
+          <span>Tải xuống phiên bản mới nhất</span>
+    </a>
+    {# TABLE #}
+    <h2 id="information" class="atitle">Thông tin</h2>
+    <table class="atable is-striped">
+      <tbody>
+        <tr><td><span>Package</span></td><td><a href="https://play.google.com/store/apps/details?id={{ app.package_name }}" class="is-link" rel="nofollow noreferrer" target="_blank">{{ app.package_name }}</a></td></tr>
+        <tr><td><span>Phiên bản</span></td><td>{{ app.version_string }} ({{ app.version_code }})</td></tr>
+        {% if app.updated is not null %}<tr><td><span>Đã cập nhật</span></td><td>{{ app.updated | date("d/m/Y") }}</td></tr>{% endif %}
+        <tr><td><span>Kích thước</span></td><td>{{ app.installation_size | human_size }}</td></tr>
+        <tr><td><span>Lượt cài đặt</span></td><td>{{ app.num_downloads | human_num_downloads }}</td></tr>
+        <tr><td><span>Danh mục</span></td><td><a class="is-link" href="/category/{{ category.category_type_slug }}/" rel="nofollow">{{ category.category_type_name }}</a>, <a class="is-link" href="/category/{{ category.category_slug }}/" rel="nofollow">{{ category.category_name }}</a></td></tr>
+      </tbody>
+    </table>
+
+    {% if app.description_html %}
+    <div style="margin-bottom: 20px">
+      <h2 id="description" class="atitle">Mô tả</h2>
+      {% if app.description_short is not empty %}<h2>{{ app.description_short }}</h2> {% endif %}
+      <div id="show-more-content" itemprop="description" style="overflow: hidden">
+        <div>{{ app.description_html | raw }}</div>
+        <br>
+      </div>
+      <div id="show-more" style="display: none">
+        <div class="show-more-end"></div>
+        <span>... Đọc thêm</span>
+      </div>
+    {% if app.recent_changes_html is not empty%}
+    <h2 id="whats-new" class="atitle">Tính năng mới</h2>
+    <div style="margin-bottom: 20px">{{ app.recent_changes_html | raw }}</div>
+    {% endif %}
+    </div>
+    {% endif %}
+    </div>
+
+    <div class="column is-3">
+      <div class="block-title">
+        <div class="atitle"><a href="/category/{{ category.category_slug }}/">Cùng danh mục</a></div>
+        <a class="more" aria-label="See more" href="/category/{{ category.category_slug }}/"><svg><use xlink:href="#apc-icon-more"></use></svg></a>
+      </div>
+      <div class="columns is-multiline">
+        {% for app in same_category_apps %}
+          <a href="/{{ app.slug_url }}/{{ app.package_name }}/" class="column app is-12">
+            <div><img src="{{ app.icon_url | image(s=90) }}" alt="→" class="lzl"></div>
+            <div>
+              <b>{{ app.title }}</b>
+              <span>@{{ app.developer_id }}</span>
+              <p><span class="tag dl">{{ app.num_downloads | human_num_downloads }}</span> <span class="tag">{{ app.installation_size | human_size }}</span></p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% include category.category_type_id == 'APPLICATION' ? 'components/categories_tags_apps.twig' : 'components/categories_tags_game.twig' %}
+    </div>
+  </div>
+  <script>
+    {% if app.description_html %}var target=document.getElementById("show-more-content");if(target.offsetHeight>195){target.style.height="195px",target.style.overflow="hidden";var showMore=document.getElementById("show-more");showMore.style.display="block",showMore.addEventListener("click",function(){target.style.height="auto",target.style.maxHeight="none",showMore.style.display="none",target.style.marginBottom="24px"})}else target.style.marginBottom="24px";{% endif %}
+  </script>
+{% endblock %}

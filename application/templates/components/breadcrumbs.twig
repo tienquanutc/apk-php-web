@@ -1,0 +1,13 @@
+{# @formatter:off #}
+<nav class="breadcrumb" aria-label="breadcrumb_items">
+  <div itemscope style="white-space: nowrap;overflow-x: auto" itemtype="http://schema.org/BreadcrumbList">
+    <p><a href="/">Trang chủ</a></p> »
+  {% for breadcrumb_item in breadcrumb_items %}
+  {% if loop.last %}
+   <p><span>{{ breadcrumb_item.text }}</span></p>
+  {% else %}
+    <p itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a href="{{ locale_path}}{{ breadcrumb_item.href }}" itemtype="http://schema.org/Thing" itemprop="item"><span itemprop="name">{{ breadcrumb_item.text }}</span></a> » <meta itemprop="position" content="{{ loop.index + 1 }}"/></p>
+  {% endif %}
+  {% endfor %}
+  </div>
+</nav>

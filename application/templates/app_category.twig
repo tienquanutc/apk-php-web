@@ -1,0 +1,37 @@
+{# @formatter:off #}
+{% extends 'base.twig' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+<div class="columns">
+  <div class="column is-9">
+    {% include 'components/breadcrumbs.twig' %}
+    {% if category.category_id == 'GAME' or category.category_id == 'APPLICATION' %}
+      <h1 class="atitle heading" style="margin-bottom: 2rem;">{{ category.category_type_name }}</h1>
+    {% else %}
+      <h1 class="atitle heading" style="margin-bottom: 2rem;">{{ category.category_type_name }} · {{ category.category_name }} </h1>
+    {% endif %}
+
+    <div class="columns is-multiline">
+      {% for app in apps %}
+      <a href="/{{ app.slug_url }}/{{ app.package_name }}/" class="column app is-4">
+        <div><img src="{{ app.icon_url | image(s=90) }}" alt="→" class="lzl"></div>
+        <div>
+          <b>{{ app.title }}</b>
+          <span>@{{ app.developer_id }}</span>
+          <p><span class="tag dl">{{ app.num_downloads | human_num_downloads }}</span> <span class="tag">{{ app.installation_size | human_size }}</span></p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% include 'components/pagination.twig' %}
+  </div>
+  <div class="column is-3">
+    {% include 'components/categories_tags_game.twig' %}
+    {% include 'components/categories_tags_apps.twig' %}
+  </div>
+</div>
+{% endblock %}

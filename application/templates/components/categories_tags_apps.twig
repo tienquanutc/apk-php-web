@@ -1,0 +1,7 @@
+{# @formatter:off #}
+<div class="atitle"><a href="{{ locale_path }}/category/app/">Ứng dụng</a></div>
+<div class="abuttons">
+  {% for category in app_categories %}
+    <a class="abutton is-small" href="/category/{{ category.category_slug }}">{{ category.category_name }}</a>
+  {% endfor %}
+</div>
