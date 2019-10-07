@@ -7,7 +7,18 @@
 {% block content %}
 <div class="columns">
   <div class="column is-9">
-    <h1 class="atitle heading" style="margin-bottom: 2rem;">Danh sách</h1>
+      <h1 class="atitle has-text-centered">Download APK · Latest Updates</h1>
+      <form action="/search" method="GET">
+          <div style="display: -webkit-box;-webkit-box-orient: horizontal;">
+              <div style="-webkit-box-flex: 1;width: 100%;">
+                  <input name="q" value="" required="" aria-label="Name" class="ainput" type="search" style="border-color: darkgray;" placeholder="Trò chơi &amp; Ứng dụng">
+              </div>
+              <button aria-label="Search" class="abutton is-light" style="border-color: darkgray;margin: 0 -1px; height: 2.25em;border-bottom-left-radius: 0;border-top-left-radius: 0">
+                  <span style="position: relative;top: -1px;">Tìm kiếm</span>
+              </button>
+          </div>
+      </form>
+      <br>
     {% for category in game_categories %}
       <div class="block-title">
         <div class="atitle"><a href="/category/{{ category.category_slug }}/">{{ category.category_name }}</a></div>

@@ -49,18 +49,21 @@ class AppController extends AbstractTwigController {
 
         $sameCategoryApps = $this->database->select('app', '*', ['category_id'=>$category['category_id'], "LIMIT" => 5, "ORDER" => Medoo::raw('RAND()')]);
 
+        if(!$app){
+            return $this->render($response, '404.twig');
+        }
         return $this->render($response, 'app.twig', [
             'app' => $app,
             'same_category_apps' => $sameCategoryApps,
             'breadcrumb_items' => $this->buildBreadcrumbItems($app, $category),
             'category' => $category,
+            'categories' => $this->googlePlayCategory->categories,
             'app_categories' => $this->googlePlayCategory->appCategories,
             'game_categories' => $this->googlePlayCategory->gameCategories,
             'rootPath' => $this->preferences->getRootPath()]);
     }
 
     private function buildBreadcrumbItems($app, $category) {
-
         return [
             ['text' => $category['category_type_name'], 'href'=>"/category/${category['category_type_slug']}"],
             ['text' => $category['category_name'], 'href'=>"/category/${category['category_slug']}"],

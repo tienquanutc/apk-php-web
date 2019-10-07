@@ -3,11 +3,13 @@
 declare(strict_types=1);
 
 use App\ContainerFactory;
-use App\Controllers\AdminIndexController;
+use App\Controllers\AppSearchController;
 use App\Controllers\AppCategoryController;
 use App\Controllers\AppController;
+use App\Controllers\AppEditController;
 use App\Controllers\HomeController;
-use App\Controllers\LoginController;
+use App\Controllers\StaticFileController;
+use App\Controllers\UploadController;
 use App\twig\TwigExtension;
 use Medoo\Medoo;
 use Slim\Factory\AppFactory;
@@ -74,15 +76,21 @@ $logErrorDetails = false;
 $app->addErrorMiddleware($displayErrorDetails, $logErrors, $logErrorDetails);
 
 // Define the app routes.
-$app->group('/', function (RouteCollectorProxy $group) {
-    $group->get('', HomeController::class)->setName('home');
-    $group->get('login', LoginController::class)->setName('login');
-    $group->get('category/{category_slug}', AppCategoryController::class)->setName('category');
-    $group->get('category/{category_slug}/', AppCategoryController::class)->setName('category');
-    $group->get('admin/apps', AdminIndexController::class)->setName('admin_apps');
-    $group->get('{slug_url}/{package_name}', AppController::class)->setName('app');
-    $group->get('{slug_url}/{package_name}/', AppController::class)->setName('app');
-});
+$app->get('/', HomeController::class)->setName('home');
+$app->post('/upload', UploadController::class)->setName('upload');
+$app->get('/search', AppSearchController::class)->setName('search');
+
+$app->get('/category/{category_slug}', AppCategoryController::class)->setName('category');
+$app->get('/category/{category_slug}/', AppCategoryController::class)->setName('category');
+$app->get('/{slug_url}/{package_name}', AppController::class)->setName('app');
+$app->get('/{slug_url}/{package_name}/', AppController::class)->setName('app');
+
+$app->any('/{slug_url}/{package_name}/{action:new|update|delete}', AppEditController::class)->add(new Tuupola\Middleware\HttpBasicAuthentication([
+    "secure" => false,
+    "users" => [
+        "root" => 'root',
+    ]
+]))->setName('app_crud');
 
 // Run the app.
 $app->run();

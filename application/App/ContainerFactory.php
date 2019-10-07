@@ -21,14 +21,27 @@ class ContainerFactory
      */
     public static function create(string $rootPath): ContainerInterface
     {
+//        $db = new Medoo([
+//            // required
+//            'database_type' => 'mysql',
+//            'database_driver' => 'pdo_mysql',
+//            'database_name' => 'apk',
+//            'server' => 'localhost',
+//            'username' => 'quannt',   
+//            'password' => 'VuYen2503',
+//            //optional
+//            'charset' => 'utf8',
+//            'port' => 3306,
+//        ]);
+
         $db = new Medoo([
             // required
             'database_type' => 'mysql',
             'database_driver' => 'pdo_mysql',
-            'database_name' => 'apk',
-            'server' => 'localhost',
-            'username' => 'quannt',
-            'password' => 'VuYen2503',
+            'database_name' => '6XuhvtYHht',
+            'server' => 'remotemysql.com',
+            'username' => '6XuhvtYHht',
+            'password' => 'Zf9dT09SVP',
             //optional
             'charset' => 'utf8',
             'port' => 3306,

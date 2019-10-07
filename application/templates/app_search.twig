@@ -1,0 +1,46 @@
+{# @formatter:off #}
+{% extends 'base.twig' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+<div class="columns">
+  <div class="column is-9">
+    <form action="/search" method="GET">
+      <div style="display: -webkit-box;-webkit-box-orient: horizontal;">
+        <div style="-webkit-box-flex: 1;width: 100%;">
+          <input name="q" value="{{ query }}" required="" aria-label="Name" class="ainput" type="search" style="border-color: darkgray;" placeholder="Trò chơi &amp; Ứng dụng">
+        </div>
+        <button aria-label="Search" class="abutton is-light" style="border-color: darkgray;margin: 0 -1px; height: 2.25em;border-bottom-left-radius: 0;border-top-left-radius: 0">
+          <span style="position: relative;top: -1px;">Tìm kiếm</span>
+        </button>
+      </div>
+    </form>
+    <br>
+    {% if apps is not empty %}
+      <h1 class="atitle heading" style="margin-bottom: 2rem;">({{ apps | length }}) kết quả</h1>
+    {% else %}
+      <p class="atitle heading" style="margin-bottom: 2rem;">Không tìm thấy kết quả nào cho <strong>{{ query }}</strong><br>Thử tìm kiếm lại hoặc khám phá những ứng dụng phía dưới</p>
+
+    {% endif %}
+    <div class="columns is-multiline">
+      {% for app in apps | default(alternate_apps ) %}
+        <a href="/{{ app.slug_url }}/{{ app.package_name }}/" class="column app is-4">
+          <div><img src="{{ app.icon_url | image(s=90) }}" alt="→" class="lzl"></div>
+          <div>
+            <b>{{ app.title }}</b>
+            <span>@{{ app.developer_id }}</span>
+            <p><span class="tag dl">{{ app.num_downloads | human_num_downloads }}</span> <span class="tag">{{ app.installation_size | human_size }}</span></p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="column is-3">
+    {% include 'components/categories_tags_game.twig' %}
+    {% include 'components/categories_tags_apps.twig' %}
+  </div>
+</div>
+{% endblock %}

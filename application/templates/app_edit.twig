@@ -1,0 +1,254 @@
+{# @formatter:off #}
+
+{% extends 'base.twig' %}
+
+{% block head %}
+  <title>{{ app.title }}</title>
+
+  <link rel="stylesheet" href="/css/froala_editor.css">
+  <link rel="stylesheet" href="/css/froala_style.css">
+  <link rel="stylesheet" href="/css/plugins/code_view.css">
+  <link rel="stylesheet" href="/css/plugins/colors.css">
+  <link rel="stylesheet" href="/css/plugins/emoticons.css">
+  <link rel="stylesheet" href="/css/plugins/line_breaker.css">
+  <link rel="stylesheet" href="/css/plugins/quick_insert.css">
+  <link rel="stylesheet" href="/css/plugins/table.css">
+  <link rel="stylesheet" href="/css/plugins/file.css">
+  <link rel="stylesheet" href="/css/plugins/char_counter.css">
+  <link rel="stylesheet" href="/css/plugins/emoticons.css">
+  <link rel="stylesheet" href="/css/plugins/fullscreen.css">
+  <link rel="stylesheet" href="/css/foopicker.css">
+
+  <style>
+    .input-wrapper{
+      position: relative;
+    }
+    input{
+      display: inherit;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 1rem;
+      width: 100%;
+    }
+    .input-wrapper .line{
+      width: 100%;
+      position: absolute;
+      border-bottom: 1px dashed darkgray;
+      bottom: -3px;
+    }
+
+    .fr-wrapper > div:first-child{
+      display: none;
+    }
+
+    .second-toolbar{
+      display: none;
+    }
+
+    .fr-wrapper{
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-bottom: 1px solid #CCCCCC !important;
+    }
+
+    #edit-description, #edit-recent-changes {
+      margin: -5px;
+    }
+
+    /***
+  Styles below are only required if you're using <iframe> fallback in
+  addition to HTML5 drag & drop (only working in Firefox/Chrome/Opera 15+).
+ ***/
+
+    /* Essential FileDrop zone element configuration: */
+    .fd-zone {
+      position: relative;
+      overflow: hidden;
+      /* The following are not required but create a pretty box: */
+      width: 15em;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* Hides <input type="file"> while simulating "Browse" button: */
+    .fd-file {
+      opacity: 0;
+      font-size: 118px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      filter: alpha(opacity=0);
+      font-family: sans-serif;
+    }
+
+    /* Provides visible feedback when user drags a file over the drop zone: */
+    .fd-zone.over { border-color: maroon; background: #eee; }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="columns">
+    <div class="column is-12">
+     {% include 'components/breadcrumbs.twig' %}
+     <form method="POST" action="">
+     <article class="app is-large" style="margin-bottom: 10px;">
+       <div id="zone-icon-url" style="border: dashed 1px darkgray">
+         <img src="{{ app.icon_url | image(s=90) }}" alt="→">
+       </div>
+       <div>
+         <h1 itemprop="name"><span class="input-wrapper"><input type="text" name="title" style="font-size: 20px;margin-bottom: 5px;font-weight: 600;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: auto" value="{{ app.title }}"><div class="line"></div></span></h1>
+         <h2 style="font-weight:500;color:#1a8453; font-size: 10px">&nbsp;</h2>
+         <h2 style="font-weight:400;padding: 2px 0;font-size: 16px;margin-top: 14px" itemprop="publisher" class="one-line">
+           <span class="input-wrapper"><input name="developer_id" type="text" value="{{ app.developer_id }}" style="color: #1967d2;width: auto"><div class="line"></div></span>
+         </h2>
+       </div>
+     </article>
+
+     {# TABLE #}
+     <h2 id="information" class="atitle">Thông tin</h2>
+     <table class="atable is-striped">
+       <tbody>
+         <tr>
+           <td><span>Package</span></td>
+           <td><div class="input-wrapper"><input name="package_name" type="text" value="{{ app.package_name }}" style="color: #1967d2;"><div class="line"></div></div></td>
+         </tr>
+         <tr>
+           <td><span>Phiên bản</span></td>
+           <td>
+             <div class="input-wrapper" style="display: inline-block; width: 100px"><input name="version_string" type="text" value="{{ app.version_string }}"><div class="line"></div></div>
+             (<div class="input-wrapper"  style="display: inline-block; width: 100px"><input name="version_code" type="text" value="{{ app.version_code }}"><div class="line"></div>)
+             </div>
+           </td>
+         </tr>
+         <tr>
+           <td><span>Đã cập nhật</span></td>
+           <td>
+             <div class="input-wrapper"><input name="updated" type="text" id="datepicker" value="{{ app.updated | date('Y-m-d') }}"><div class="line"></div></div>
+           </td>
+         </tr>
+         <tr>
+           <td><span>Kích thước</span></td>
+           <td><div class="input-wrapper"><input name="installation_size" type="text" value="{{ app.installation_size }}"><div class="line"></div></div></td>
+         </tr>
+         <tr>
+           <td><span>Lượt cài đặt</span></td>
+           <td><div class="input-wrapper"><input name="num_downloads" type="text" value="{{ app.num_downloads }}"><div class="line"></div></div></td>
+         </tr>
+         <tr>
+           <td><span>Danh mục</span></td>
+           <td>
+             <select name="category_id" class="aselect" style="display: inline-block; width: unset; font-size: 1em;padding: 2px;border: 1px dashed darkgray;">
+               {% for loop_category in game_categories %}
+                 <option value="{{ loop_category.category_id }}" {{ loop_category.category_id == app.category_id ? 'selected' : ''}}>{{ loop_category.category_name }}</option>
+               {% endfor %}
+               {% for loop_category in app_categories %}
+                 <option value="{{ loop_category.category_id }}" {{ loop_category.category_id == app.category_id ? 'selected' : ''}}>{{ loop_category.category_name }}</option>
+               {% endfor %}
+             </select>
+           </td>
+         </tr>
+       <tr>
+         <td>Link tải</td>
+         <td>
+           <div class="input-wrapper">
+             <input name="download_url" placeholder="http://static....">
+             <div class="line"></div>
+             <a href="javascript:void(0)" class="abutton is-small" style="position: absolute;top: -8px;right: 0;">Upload</a>
+           </div>
+         </td>
+       </tr>
+       </tbody>
+     </table>
+
+     <div style="margin-bottom: 50px">
+       <h2 id="description" class="atitle">Mô tả</h2>
+       <h2><div class="input-wrapper"><input name="description_short" type="text" value="{{ app.description_short }}"><div class="line"></div></div></h2>
+       <br>
+       <div id='edit-description'>{{ app.description_html | raw }}</div>
+       <br>
+       <h2 id="whats-new" class="atitle">Tính năng mới</h2>
+       <div id='edit-recent-changes'>{{ app.recent_changes_html | raw }}</div>
+
+       <input name="description_html" type="hidden">
+       <input name="recent_changes_html" type="hidden">
+       <input name="icon_url" type="hidden" value="{{ app.icon_url }}">
+       <input name="action" type="hidden" value="{{ action | default('UPDATE') }}">
+     </div>
+     <div class="abuttons" style="justify-content: center">
+       <button data-action="{{ action | default('UPDATE') }}" class="abutton is-success" type="submit" style="width: 250px">Lưu</button>
+       <button data-action="DELETE" class="abutton is-danger" type="submit" style="width: 250px">Xoá</button>
+     </div>
+     </form>
+    </div>
+  </div>
+  <script type="text/javascript" src="/js/froala_editor.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/font_family.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/colors.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/align.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/code_view.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/colors.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/emoticons.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/draggable.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/font_size.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/font_family.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/line_breaker.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/link.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/lists.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/table.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/url.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/emoticons.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/inline_style.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/save.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/fullscreen.min.js"></script>
+  <script type="text/javascript" src="/js/foopicker.js"></script>
+  <script type="text/javascript" src="/js/filedrop-min.js"></script>
+
+  <script>
+    //html editor
+    var editor =  new FroalaEditor('div#edit-description, div#edit-recent-changes', { charCounterCount: false}, function () {
+    // Call the method inside the initialized event.
+    });
+
+    //date picker
+    var foopicker = new FooPicker({
+      id: 'datepicker',
+      dateFormat: 'yyyy-MM-dd'
+    });
+
+    var form = document.querySelector('form');
+
+    form.querySelector('button[data-action=DELETE').addEventListener('click', function (e) {
+      form.querySelector('[name=action]').value = 'DELETE';
+      form.submit();
+    });
+
+    form.addEventListener('submit', e =>{
+      document.querySelector('form input[name=description_html]').value = editor[0].html.get();
+      document.querySelector('form input[name=recent_changes_html]').value = editor[1].html.get();
+    });
+
+    var options = {iframe: {url: '/upload'}};
+    // 'zone' is an ID but you can also give a DOM node:
+    var zone = new FileDrop('zone-icon-url', options);
+
+    // Do something when a user chooses or drops a file:
+    zone.event('send', function (files) {
+      let file = files[0];
+      document.querySelector('#zone-icon-url img').src = '/gif/Spin-1s-90px.gif';
+      file.event('done', function (xhr) {
+        let responseBody = JSON.parse(xhr.responseText);
+        console.log(xhr.responseText);
+        let imageUrl = responseBody['file_url'];
+        document.querySelector('#zone-icon-url img').src = imageUrl;
+        document.querySelector('form input[name=icon_url]').value = imageUrl;
+
+      });
+      file.sendTo('/upload');
+    })
+  </script>
+{% endblock %}

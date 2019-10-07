@@ -70,7 +70,8 @@ class AppCategoryController extends AbstractTwigController {
         );
 
         unset($where['LIMIT']);
-        $count = $this->database->count('app', $where);
+        unset($where['ORDER']);
+        $count = $this->database->count('app',  ["[><]category"=>"category_id"], '*', $where);
 
         $pagination = [
             "path" => $request->getUri()->getPath(),
