@@ -6,12 +6,14 @@ use App\Controllers\AppCategoryController;
 use App\Controllers\AppController;
 use App\Controllers\AppEditController;
 use App\Controllers\AppSearchController;
+use App\Controllers\CategoryController;
 use App\Controllers\HomeController;
 use App\Controllers\UploadController;
 use App\Preferences;
 use App\utils\GooglePlayCategory;
 use Medoo\Medoo;
 use Psr\Container\ContainerInterface;
+use Slim\Flash\Messages;
 
 return [
     HomeController::class => function (ContainerInterface $container): HomeController {
@@ -31,5 +33,8 @@ return [
     },
     AppSearchController::class => function (ContainerInterface $container): AppSearchController {
         return new AppSearchController($container->get('view'), $container->get(Preferences::class), $container->get(Medoo::class), $container->get(GooglePlayCategory::class));
+    },
+    CategoryController::class => function (ContainerInterface $container): CategoryController {
+        return new CategoryController($container->get('view'), $container->get(Preferences::class), $container->get(Medoo::class), $container->get(GooglePlayCategory::class));
     },
 ];

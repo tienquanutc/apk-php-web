@@ -3,6 +3,7 @@
 
 {% block head %}
 <title>{{ app.title }}</title>
+{#<div id="fb-root"></div>#}
 {% endblock %}
 
 {% block content %}
@@ -22,6 +23,7 @@
           <i><svg class="icon-download"><use xlink:href="#apc-icon-download"></use></svg></i>
           <span>Tải xuống phiên bản mới nhất</span>
     </a>
+    <div class="share-wrap" style="text-align: center;"><div class="sharethis-inline-share-buttons" data-url="https://quannt.402vanhoa.ml/{{ app.slug_url }}/{{ app.package_name }}"></div></div>
     {# TABLE #}
     <h2 id="information" class="atitle">Thông tin</h2>
     <table class="atable is-striped">
@@ -53,6 +55,26 @@
     {% endif %}
     </div>
     {% endif %}
+      <h2 id="comments" class="atitle">Bình luận</h2>
+      <div id="disqus_thread"></div>
+      <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        var disqus_config = function () {
+        this.language = "vi";
+        this.page.url = "https://quannt.402vanhoa.ml/temple-run-2/{{ app.package_name }}/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "{{ app.package_name }}"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        (function() { // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          s.src = 'https://tienquan.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
 
     <div class="column is-3">

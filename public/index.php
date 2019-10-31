@@ -7,6 +7,7 @@ use App\Controllers\AppSearchController;
 use App\Controllers\AppCategoryController;
 use App\Controllers\AppController;
 use App\Controllers\AppEditController;
+use App\Controllers\CategoryController;
 use App\Controllers\HomeController;
 use App\Controllers\StaticFileController;
 use App\Controllers\UploadController;
@@ -17,6 +18,8 @@ use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
+session_cache_limiter('public');
+session_start();
 // Set the default timezone.
 date_default_timezone_set('Europe/Zurich');
 
@@ -79,6 +82,7 @@ $app->addErrorMiddleware($displayErrorDetails, $logErrors, $logErrorDetails);
 $app->get('/', HomeController::class)->setName('home');
 $app->post('/upload', UploadController::class)->setName('upload');
 $app->get('/search', AppSearchController::class)->setName('search');
+$app->get('/category/', CategoryController::class)->setName('category');
 
 $app->get('/category/{category_slug}', AppCategoryController::class)->setName('category');
 $app->get('/category/{category_slug}/', AppCategoryController::class)->setName('category');

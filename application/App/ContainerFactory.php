@@ -27,7 +27,7 @@ class ContainerFactory
 //            'database_driver' => 'pdo_mysql',
 //            'database_name' => 'apk',
 //            'server' => 'localhost',
-//            'username' => 'quannt',   
+//            'username' => 'quannt',
 //            'password' => 'VuYen2503',
 //            //optional
 //            'charset' => 'utf8',
@@ -50,11 +50,10 @@ class ContainerFactory
         $containerBuilder->addDefinitions([
             Preferences::class => new Preferences($rootPath),
             Medoo::class => $db,
-            GooglePlayCategory::class => new GooglePlayCategory($db)
+            GooglePlayCategory::class => new GooglePlayCategory($db),
         ]);
         $containerBuilder->addDefinitions($rootPath . '/application/config/container-definitions.php');
         $containerBuilder->addDefinitions($rootPath . '/application/config/container-controllers.php');
-
         // Note: In production, you should enable container-compilation.
         // $containerBuilder->enableCompilation($rootPath . '/cache');
 

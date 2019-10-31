@@ -7,7 +7,28 @@
   <style>{% include 'components/bulma.min.twig' %}</style>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  {% if onesignal != 'false' %}
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+      var OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "a5677a46-e939-4974-aec9-2dfec0bcdbe1",
+        });
+      });
+    </script>
+  {% endif %}
+  <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5dbad22e960a7f001223dbef&product=sticky-share-buttons' async='async'></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141275337-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
+        gtag('config', 'UA-141275337-1');
+    </script>
+  {% if message is not empty %}<script>alert('{{ message }}')</script>{% endif %}
   {% block head %}{% endblock %}
 </head>
 <body>
@@ -35,4 +56,29 @@
   <symbol id="apc-icon-expand-more" viewBox="4 4 16 16"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path d="M0 0h24v24H0z" fill="none"></path></symbol>
 </svg>
 </body>
+{% if messenger != 'false' %}
+  <!-- Your customer chat code -->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        xfbml            : true,
+        version          : 'v4.0'
+      });
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Your customer chat code -->
+  <div class="fb-customerchat"
+       attribution=setup_tool
+       page_id="2245192888838077">
+  </div>
+{% endif %}
+<div class="sharethis-inline-share-buttons"></div>
 </html>

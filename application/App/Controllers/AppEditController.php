@@ -18,6 +18,7 @@ class AppEditController extends AbstractTwigController {
     private $preferences;
     private $database;
     private $googlePlayCategory;
+    private $flash;
 
     /**
      * HomeController constructor.
@@ -49,6 +50,9 @@ class AppEditController extends AbstractTwigController {
 
         //GET
         if($request->getMethod() =='GET') {
+            $message = $_SESSION['message'];
+            $_SESSION['message'] = null;
+
             return $this->render($response, 'app_edit.twig', [
                 'app' => $app,
                 'category' => $category,
@@ -56,11 +60,14 @@ class AppEditController extends AbstractTwigController {
                 'app_categories' => $this->googlePlayCategory->appCategories,
                 'game_categories' => $this->googlePlayCategory->gameCategories,
                 'rootPath' => $this->preferences->getRootPath(),
+                'messenger' => 'false',
+                'onesignal' => 'false',
+                'message' => $message,
                 'breadcrumb_items' => $this->buildBreadcrumbItems($app, $category),
             ]);
          }
-        //POST
 
+        //POST
         $formAttributes = $request->getParsedBody();
         $action = $formAttributes['action'] ?: 'NEW';
         $fields = ['package_name', 'title', 'version_string', 'version_code', 'updated', 'installation_size',
@@ -72,24 +79,28 @@ class AppEditController extends AbstractTwigController {
             return $map;
         }, []);
         $update['slug_url'] = AppEditController::slugify($update['title']);
-
-
         switch ($action) {
             case 'UPDATE':
                 $data = $this->database->update('app', $update, ['package_name' => $package_name]);
                 if($data->rowCount() > 0) $package_name = $update['package_name'] ?: $package_name;
                 $response = $response->withStatus(302);
                 $response = $response->withHeader('location', "/app/$package_name/update");
+                $_SESSION['message'] = $data->rowCount() > 0 ? 'Cập nhật thành công' : 'Cập nhật thất bại';
                 break;
             case 'DELETE';
-                $this->database->delete('app', ['package_name' => $package_name]);
-                echo "DELETE OK";
+                $data = $this->database->delete('app', ['package_name' => $package_name]);
+                $response = $response->withStatus(302);
+                $response = $response->withHeader('location', "/");
+
+                $_SESSION['message'] = 'Xoá thành công';
                 break;
             case 'NEW';
                 $data = $this->database->insert('app', $update);
                 if($data->rowCount() > 0) $package_name = $update['package_name'];
                 $response = $response->withStatus(302);
                 $response = $response->withHeader('location', "/app/$package_name");
+
+                $_SESSION['message'] = $data->rowCount() > 0 ? 'Tạo thành công' : 'Tạo thất bại';
                 break;
         }
 

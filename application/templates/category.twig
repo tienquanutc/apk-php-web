@@ -1,0 +1,15 @@
+{% extends 'base.twig' %}
+
+{% block head %}
+    <title>Danh mục</title>
+{% endblock %}
+
+{% block content %}
+    <div class="columns">
+        <div class="column is-12">
+            {% include 'components/breadcrumbs.twig' %}
+            {% include 'components/categories_tags_game.twig' %}
+            {% include 'components/categories_tags_apps.twig' %}
+        </div>
+    </div>
+{% endblock %}

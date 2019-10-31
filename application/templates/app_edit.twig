@@ -156,7 +156,7 @@
          <td>Link tải</td>
          <td>
            <div class="input-wrapper">
-             <input name="download_url" placeholder="http://static....">
+             <input name="download_url" placeholder="http://static...." value="{% if app.download_url is not empty %}{{ app.download_url }}{% else %}https://quannt.402vanhoa.ml/files/dummy.apk?_fn={{ app.title }}_v{{ app.version_string }}.apk{% endif %}">
              <div class="line"></div>
              <a href="javascript:void(0)" class="abutton is-small" style="position: absolute;top: -8px;right: 0;">Upload</a>
            </div>

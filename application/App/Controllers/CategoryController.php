@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 
-class HomeController extends AbstractTwigController {
+class CategoryController extends AbstractTwigController {
     /**
      * @var Preferences
      */
@@ -43,27 +43,17 @@ class HomeController extends AbstractTwigController {
      * @return Response
      */
     public function __invoke(Request $request, Response $response, array $args = []): Response {
-        $categories = $data = $this->database->select('category', 'category_id');
-
-        $query = join("union all", array_map(function ($category) {
-            return "(select * from app where category_id = '$category' order by num_downloads DESC limit 3)";
-        }, $categories));
-        $apps = $this->database->query($query)->fetchAll();
-
-        $appsByCategory = array_reduce($apps, function ($map, $app) {
-            if (!$map[$app['category_id']]) $map[$app['category_id']] = [];
-            array_push($map[$app['category_id']], $app);
-            return $map;
-        }, []);
-
-        $message = $_SESSION['message'];
-        $_SESSION['message'] = null;
-        return $this->render($response, 'index.twig', [
-            'apps_by_category' => $appsByCategory,
+        return $this->render($response, 'category.twig', [
+            'categories' => $this->googlePlayCategory->categories,
             'app_categories' => $this->googlePlayCategory->appCategories,
             'game_categories' => $this->googlePlayCategory->gameCategories,
-            'rootPath' => $this->preferences->getRootPath(),
-            'message' => $message
-            ]);
+            'breadcrumb_items' => $this->buildBreadcrumbItems(),
+            'rootPath' => $this->preferences->getRootPath()]);
+    }
+
+    private function buildBreadcrumbItems() {
+        return [
+            ['text' => 'Danh mục']
+        ];
     }
 }
