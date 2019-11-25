@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="48b5513f-f374-4158-bd4d-9d1affb75e37" name="402vanhoa" url="https://php.quannt.me">
+        <fileTransfer host="157.230.241.89" port="22" privateKey="C:\Users\dev\.ssh\id_rsa" rootFolder="/home/quannt/php" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions controlEncoding="utf-8" dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

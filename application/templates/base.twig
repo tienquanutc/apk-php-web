@@ -1,42 +1,49 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 
-  <style>{% include 'components/bulma.min.twig' %}</style>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  {% if onesignal != 'false' %}
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    <script>
-      var OneSignal = window.OneSignal || [];
-      OneSignal.push(function() {
-        OneSignal.init({
-          appId: "a5677a46-e939-4974-aec9-2dfec0bcdbe1",
-        });
-      });
-    </script>
-  {% endif %}
-  <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5dbad22e960a7f001223dbef&product=sticky-share-buttons' async='async'></script>
+    <style>{% include 'components/bulma.min.twig' %}</style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    {% if onesignal != 'false' %}
+        <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+        <script>
+            var OneSignal = window.OneSignal || [];
+            OneSignal.push(function () {
+                OneSignal.init({
+                    appId: "a5677a46-e939-4974-aec9-2dfec0bcdbe1",
+                });
+            });
+        </script>
+    {% endif %}
+    <script type='text/javascript'
+            src='https://platform-api.sharethis.com/js/sharethis.js#property=5dbad22e960a7f001223dbef&product=sticky-share-buttons'
+            async='async'></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141275337-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'UA-141275337-1');
     </script>
-  {% if message is not empty %}<script>alert('{{ message }}')</script>{% endif %}
-  {% block head %}{% endblock %}
+    {% if message is not empty %}
+        <script>alert('{{ message }}')</script>{% endif %}
+    {% block head %}{% endblock %}
 </head>
 <body>
 {% include 'components/nav.twig' %}
 <section class="section">
-  <div class="container">
-    {% block content %}{% endblock %}
-  </div>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
 </section>
 
 {% include 'components/footer.twig' %}
@@ -51,34 +58,68 @@
     });
 </script>
 <svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="apc-icon-more" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" fill="border-bottom: 2px solid #71c21b;"></path></symbol>
-  <symbol id="apc-icon-download" viewBox="0 0 448 512"><path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z" fill="#fff"></path></symbol>
-  <symbol id="apc-icon-expand-more" viewBox="4 4 16 16"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path d="M0 0h24v24H0z" fill="none"></path></symbol>
+    <symbol id="apc-icon-more" viewBox="0 0 24 24">
+        <path d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              fill="border-bottom: 2px solid #71c21b;"></path>
+    </symbol>
+    <symbol id="apc-icon-download" viewBox="0 0 448 512">
+        <path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"
+              fill="#fff"></path>
+    </symbol>
+    <symbol id="apc-icon-expand-more" viewBox="4 4 16 16">
+        <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+    </symbol>
 </svg>
 </body>
 {% if messenger != 'false' %}
-  <!-- Your customer chat code -->
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        xfbml            : true,
-        version          : 'v4.0'
-      });
-    };
+    <!-- Your customer chat code -->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v4.0'
+            });
+        };
 
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 
-  <!-- Your customer chat code -->
-  <div class="fb-customerchat"
-       attribution=setup_tool
-       page_id="2245192888838077">
-  </div>
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat"
+         attribution=setup_tool
+         page_id="2245192888838077">
+    </div>
 {% endif %}
-<div class="sharethis-inline-share-buttons"></div>
+<script>
+    window.onscroll = function () {document.body.scrollTop > 50 || document.documentElement.scrollTop > 50 ? backtop.style.display = "block" : backtop.style.display = "none"};
+    var timeOut;
+    function scrollToTop() {if (document.body.scrollTop!=0 || document.documentElement.scrollTop!=0){window.scrollBy(0,-50);timeOut=setTimeout('scrollToTop()',10);}else clearTimeout(timeOut);}
+    var backtop = document.getElementById("backtop");
+    backtop.addEventListener('click', scrollToTop);
+
+    let shareThisFakeShareIntervalId = setInterval(() => {
+        let $stTotals = document.querySelectorAll(".st-total");
+        if (!$stTotals || $stTotals.length < {{ share_count | default(1) }}) return;
+        let shareCount = Math.ceil(Math.random() * 900) + 100;
+
+        document.querySelectorAll(".st-label").forEach(it => it.innerText = shareCount);
+        clearInterval(shareThisFakeShareIntervalId);
+
+        let count = 0;
+        let removeHiddenIntervalId = setInterval(() => {
+            let $stTotals = document.querySelectorAll(".st-total");
+            $stTotals.forEach(it => it.classList.remove("st-hidden"));
+            count++;
+            if (count === 5) clearInterval(removeHiddenIntervalId);
+        }, 200);
+    }, 200);
+</script>
 </html>
