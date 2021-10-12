@@ -4,20 +4,70 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4972658cdd2e6c17e2bd76e32e0764c2",
+    "content-hash": "48f8f4fa115b3820b0cbb5ad585274cf",
     "packages": [
         {
-            "name": "catfan/medoo",
-            "version": "v1.7.3",
+            "name": "akrabat/rka-slim-session-middleware",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/catfan/Medoo.git",
-                "reference": "113519d8032044a1d7b0852740e8f8d210b4dee2"
+                "url": "https://github.com/akrabat/rka-slim-session-middleware.git",
+                "reference": "e4f8f485f6d52fd4c0a2254d0b12240245629e6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/catfan/Medoo/zipball/113519d8032044a1d7b0852740e8f8d210b4dee2",
-                "reference": "113519d8032044a1d7b0852740e8f8d210b4dee2",
+                "url": "https://api.github.com/repos/akrabat/rka-slim-session-middleware/zipball/e4f8f485f6d52fd4c0a2254d0b12240245629e6a",
+                "reference": "e4f8f485f6d52fd4c0a2254d0b12240245629e6a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "slim/slim": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RKA\\": "RKA"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Allen",
+                    "email": "rob@akrabat.com",
+                    "homepage": "http://akrabat.com"
+                }
+            ],
+            "description": "Simple session middleware for Slim Framework",
+            "homepage": "http://github.com/akrabat/rka-slim-session-middleware",
+            "keywords": [
+                "middleware",
+                "session",
+                "slim"
+            ],
+            "support": {
+                "issues": "https://github.com/akrabat/rka-slim-session-middleware/issues",
+                "source": "https://github.com/akrabat/rka-slim-session-middleware/tree/master"
+            },
+            "time": "2016-04-18T07:52:43+00:00"
+        },
+        {
+            "name": "catfan/medoo",
+            "version": "v1.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/catfan/Medoo.git",
+                "reference": "3b28d9469fd3f6f6e9c1106ec4342111ab2b50c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/catfan/Medoo/zipball/3b28d9469fd3f6f6e9c1106ec4342111ab2b50c4",
+                "reference": "3b28d9469fd3f6f6e9c1106ec4342111ab2b50c4",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +114,11 @@
                 "sql",
                 "sqlite"
             ],
-            "time": "2019-08-14T13:47:48+00:00"
+            "support": {
+                "issues": "https://github.com/catfan/Medoo/issues",
+                "source": "https://github.com/catfan/Medoo"
+            },
+            "time": "2019-10-12T13:13:11+00:00"
         },
         {
             "name": "jeremeamia/superclosure",
@@ -3819,5 +3873,6 @@
         "ext-json": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
 }
